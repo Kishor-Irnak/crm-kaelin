@@ -31,6 +31,7 @@ import {
   ChevronsLeft,
   ChevronsRight,
   ArrowUpDown,
+  Clock,
 } from "lucide-react";
 import { cn } from "../components/ui-primitives";
 
@@ -55,6 +56,9 @@ interface LeadData {
   budget?: string;
   goals?: string;
   message?: string;
+  brand?: string;
+  budgetConfirmation?: string;
+  timeline?: string;
 }
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
@@ -357,7 +361,7 @@ function LeadDetailModal({
             {lead.website && (
               <div>
                 <label className="block text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1.5">
-                  Website
+                  Website / Link
                 </label>
                 <a
                   href={
@@ -374,6 +378,45 @@ function LeadDetailModal({
                 </a>
               </div>
             )}
+
+            {lead.brand && (
+              <div>
+                <label className="block text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1.5">
+                  Brand Name
+                </label>
+                <p className="text-sm font-semibold text-gray-800">{lead.brand}</p>
+              </div>
+            )}
+
+            <div className="grid grid-cols-2 gap-4">
+              {lead.timeline && (
+                <div>
+                  <label className="block text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1.5">
+                    Timeline
+                  </label>
+                  <span className="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-semibold bg-blue-50 text-blue-600 border border-blue-200">
+                    <Clock size={11} className="mr-1" />
+                    {lead.timeline}
+                  </span>
+                </div>
+              )}
+
+              {lead.budgetConfirmation && (
+                <div>
+                  <label className="block text-xs font-semibold text-gray-400 uppercase tracking-widest mb-1.5">
+                    Budget Confirmed
+                  </label>
+                  <span className={cn(
+                    "inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-semibold border",
+                    lead.budgetConfirmation.toLowerCase() === "yes" 
+                      ? "bg-green-50 text-green-600 border-green-200"
+                      : "bg-gray-50 text-gray-500 border-gray-200"
+                  )}>
+                    {lead.budgetConfirmation}
+                  </span>
+                </div>
+              )}
+            </div>
 
             {lead.goals && (
               <div>
@@ -468,6 +511,9 @@ export const Dashboard: React.FC = () => {
               category: data.category || data.service || "",
               website: data.website || data.websiteLink || "",
               formType: data.formType || data.source || "contact",
+              brand: data.brand || "",
+              budgetConfirmation: data.budgetConfirmation || "",
+              timeline: data.timeline || "",
               collection: colName,
             } as LeadData);
           });

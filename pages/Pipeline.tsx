@@ -24,6 +24,7 @@ import {
   Trash2,
   GripVertical,
   Filter,
+  Clock,
 } from "lucide-react";
 import { cn } from "../components/ui-primitives";
 
@@ -80,6 +81,9 @@ interface LeadData {
   budget?: string;
   goals?: string;
   message?: string;
+  brand?: string;
+  budgetConfirmation?: string;
+  timeline?: string;
 }
 
 interface PipelineColumn {
@@ -430,10 +434,10 @@ function LeadDetail({
               {lead.website && (
                 <div>
                   <label className="text-xs font-medium text-[hsl(var(--muted-foreground))] uppercase tracking-wide mb-1 block">
-                    Website
+                    Website / Link
                   </label>
                   <a
-                    href={lead.website}
+                    href={lead.website.startsWith("http") ? lead.website : `https://${lead.website}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-1.5 text-[hsl(var(--primary))] hover:opacity-80 text-sm"
@@ -443,6 +447,47 @@ function LeadDetail({
                   </a>
                 </div>
               )}
+
+              {lead.brand && (
+                <div>
+                  <label className="text-xs font-medium text-[hsl(var(--muted-foreground))] uppercase tracking-wide mb-1 block">
+                    Brand Name
+                  </label>
+                  <p className="text-sm text-[hsl(var(--foreground))] font-semibold">
+                    {lead.brand}
+                  </p>
+                </div>
+              )}
+
+              <div className="grid grid-cols-2 gap-4">
+                {lead.timeline && (
+                  <div>
+                    <label className="text-xs font-medium text-[hsl(var(--muted-foreground))] uppercase tracking-wide mb-1 block">
+                      Timeline
+                    </label>
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-50 text-blue-600 border border-blue-200">
+                      <Clock size={12} className="mr-1" />
+                      {lead.timeline}
+                    </span>
+                  </div>
+                )}
+
+                {lead.budgetConfirmation && (
+                  <div>
+                    <label className="text-xs font-medium text-[hsl(var(--muted-foreground))] uppercase tracking-wide mb-1 block">
+                      Budget Confirmed
+                    </label>
+                    <span className={cn(
+                      "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border",
+                      lead.budgetConfirmation.toLowerCase() === "yes"
+                        ? "bg-green-50 text-green-600 border-green-200"
+                        : "bg-gray-50 text-gray-500 border-gray-200"
+                    )}>
+                      {lead.budgetConfirmation}
+                    </span>
+                  </div>
+                )}
+              </div>
 
               {lead.goals && (
                 <div>
@@ -568,6 +613,9 @@ export const Pipeline: React.FC = () => {
                 category: data.category || data.service || "",
                 website: data.website || data.websiteLink || "",
                 formType: data.formType || data.source || "contact",
+                brand: data.brand || "",
+                budgetConfirmation: data.budgetConfirmation || "",
+                timeline: data.timeline || "",
                 status: (data.status as LeadStatus) || "leads",
                 collection: collectionName,
               } as LeadData);
