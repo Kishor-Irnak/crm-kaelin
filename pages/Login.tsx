@@ -45,7 +45,7 @@ export const Login: React.FC = () => {
         <div className="p-8 sm:p-10 flex flex-col items-center border-b border-[hsl(var(--border))]">
           <div className="w-16 h-16 flex items-center justify-center mb-6">
             <img
-              src="https://i.postimg.cc/GhWnSTSq/favicon.png"
+              src="https://i.postimg.cc/s3hdwC3L/image-removebg-preview.png"
               alt="KAELIN"
               className="w-full h-full object-contain drop-shadow-sm"
             />
@@ -85,7 +85,7 @@ export const Login: React.FC = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full pl-11 pr-4 py-3.5 bg-[hsl(var(--background))] border border-[hsl(var(--border))] rounded-xl text-sm font-semibold text-[hsl(var(--foreground))] focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary))]/50 focus:border-transparent transition-all"
-                  placeholder="admin@trendingmotion.com"
+                  placeholder="admin@kaelin.com"
                   required
                 />
               </div>
